@@ -33,11 +33,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ********** Función para comprobar si los usuarios han hecho login **********
-function isAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/");
-}
+
 
 // ********** Ruta que manda al usuario a iniciar sesión con Google **********
 app.get(

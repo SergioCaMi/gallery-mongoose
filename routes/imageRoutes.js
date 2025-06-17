@@ -18,6 +18,12 @@ async function extractExifFromUrl(imageUrl) {
   }
 }
 
+// ********** Función para comprobar si los usuarios han hecho login **********
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect("/");
+}
+
 // **************************************** Home ****************************************
 router.get("/", async (req, res) => {
   try {
@@ -42,7 +48,9 @@ router.get("/", async (req, res) => {
 });
 
 // **************************************** Add new image ****************************************
-router.get("/new-image", (req, res) => {
+// **************************************** Add new image GET (Mostrar formulario) ****************************************
+
+router.get("/new-image", isAuthenticated, async (req, res) => {    
   res.render("addImage.ejs", {
     title: "New Image",
     message: undefined,
@@ -57,6 +65,7 @@ router.get("/new-image", (req, res) => {
   });
 });
 
+// **************************************** Add new image POST (guardar imagen) ****************************************
 router.post("/new-image", async (req, res) => {
   try {
     const existingImage = await Image.findOne({
@@ -88,7 +97,6 @@ router.post("/new-image", async (req, res) => {
     const exifData = await extractExifFromUrl(req.body.urlImagen);
 
     const newImage = new Image({
-      id: uuidv4(),
       title: req.body.title,
       urlImagen: req.body.urlImagen,
       date: req.body.date,
@@ -97,7 +105,12 @@ router.post("/new-image", async (req, res) => {
       exif: exifData,
     });
 
-    await newImage.save();
+    try {
+        await newImage.save();
+    } catch(err){
+        console.log("Error al guardar la imagen en la BBDD. ", err.message);
+        return;
+    }
 
     res.render("addImage.ejs", {
       title: "New Image",
