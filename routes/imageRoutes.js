@@ -141,7 +141,7 @@ router.post("/image/:id/delete", async (req, res) => {
   }
 });
 
-// **************************************** Visualizar / Detalles / Editar ****************************************
+// **************************************** Visualizar  ****************************************
 function renderView(res, ejsFile, title, image, user) {
   res.render(ejsFile, {
     title,
@@ -154,6 +154,7 @@ function renderView(res, ejsFile, title, image, user) {
 router.get("/image/:id/view", async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
+    
     if (!image) return res.status(404).send("Imagen no encontrada");
     renderView(res, "viewImage.ejs", "View", image, req.user);
   } catch (error) {
@@ -162,8 +163,11 @@ router.get("/image/:id/view", async (req, res) => {
   }
 });
 
+// **************************************** Detalles  ****************************************
+
 router.get("/image/:id/details", async (req, res) => {
   try {
+    
     const image = await Image.findById(req.params.id);
     if (!image) return res.status(404).send("Imagen no encontrada");
     renderView(res, "detailsImage.ejs", "Details", image, req.user);
@@ -172,6 +176,9 @@ router.get("/image/:id/details", async (req, res) => {
     res.status(500).send("Error al mostrar detalles");
   }
 });
+
+// **************************************** Editar  ****************************************
+// **************************************** Editar  GET (cargar datos antiguos) ****************************************
 
 router.get("/image/:id/edit", async (req, res) => {
   try {
@@ -193,6 +200,8 @@ router.get("/image/:id/edit", async (req, res) => {
     res.status(500).send("Error al editar imagen");
   }
 });
+
+// **************************************** Editar POST (guardar nuevos datos) ****************************************
 
 router.post("/edit-image", async (req, res) => {
   try {

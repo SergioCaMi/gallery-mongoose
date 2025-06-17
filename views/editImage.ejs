@@ -1,41 +1,38 @@
-<%- include("template/cabecera", {title: title}) %>
+<%- include("template/cabecera", { title: title }) %>
+
 <div class="gallery container" style="display: flex; justify-content: center;">
-    <div class="card" style="min-width: 800px; height: 800px; display: flex; justify-content: center; align-items: center;">
-        <img src="<%= dataImage[index].urlImagen %>" alt="<%= dataImage[index].title %>" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
+  <div class="card" style="min-width: 800px; height: 800px; display: flex; justify-content: center; align-items: center;">
+    <img src="<%= image.urlImagen %>" alt="<%= image.title %>" style="width: 100%; height: 100%; object-fit: cover;">
+  </div>
 </div>
-    <form class="formulario container" id="imageForm" action="/edit-image" method="POST">
-        <!-- Enviamos los datos que queramos, como por ejemplo, el id -->
-        <input type="hidden" name="index" value="<%= [index] %>">
-        <div class="form-group">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" maxlength="30" pattern="^[a-zA-Z0-9 _]+$" value="<%= dataImage[index].title %>" required>
-        </div>
 
-        <div class="form-group">
-            <label for="date">Fecha:</label>
-            <input type="date" id="date" name="date" value="<%=dataImage[index].date%>" required>
-        </div>
+<form class="formulario container" id="imageForm" action="/edit-image" method="POST">
+  <!-- Enviamos el ID de la imagen -->
+  <input type="hidden" name="id" value="<%= image._id %>">
 
-        <div class="form-group">
-            <label for="description">Descripción:</label>
-            <textarea id="description" name="description" maxlength="4000"
-                rows="6"><%= dataImage[index].description %></textarea>
-        </div>
+  <div class="form-group">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" maxlength="30" pattern="^[a-zA-Z0-9 _]+$" value="<%= image.title %>" required>
+  </div>
 
-        <button type="submit" class="submit-btn">📤 Enviar imagen</button>
-    </form>
+  <div class="form-group">
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" value="<%= image.date %>" required>
+  </div>
 
+  <div class="form-group">
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" maxlength="4000" rows="6"><%= image.description %></textarea>
+  </div>
 
+  <button type="submit" class="submit-btn">📤 Guardar cambios</button>
+</form>
 
+<%- include("template/footer") %>
 
-
-
-    <%- include("template/footer")%>
-        <script>
-            const dataImage = <% - JSON.stringify(dataImage) %>;
-            const index = <% - index %>;
-        </script>
-        </body>
-
-        </html>
+<script>
+  // Si necesitas acceder al objeto image desde JS:
+  const image = <%= JSON.stringify(image) %>;
+</script>
+</body>
+</html>
