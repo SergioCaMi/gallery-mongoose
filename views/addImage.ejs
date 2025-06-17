@@ -1,0 +1,49 @@
+<%- include("template/cabecera", {title: title}) %>
+
+<form class="formulario container" id="imageForm" action="/new-image" method="POST">
+  <% if (message) { %>
+    <div class="message-box" style="color: <%= colorMessage %>">
+      <%= message %>
+    </div>
+  <% } %>
+
+  <div class="form-group">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" maxlength="30" pattern="^[a-zA-Z0-9 _]+$" required>
+  </div>
+
+  <div class="form-group">
+    <label for="urlImagen">URL de la imagen:</label>
+    <input type="url" id="urlImagen" name="urlImagen" required>
+    <div id="msgUrl" style="margin-top:5px;font-size:0.95em;"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" required>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" maxlength="4000" rows="6"></textarea>
+  </div>
+
+  <button type="submit" class="submit-btn">📤 Enviar imagen</button>
+</form>
+
+  </div> 
+<%- include("template/footer") %>
+<script>
+  document.querySelector("#urlImagen").addEventListener("blur", e => {
+    const url = e.target.value;
+    const msgUrl = document.getElementById("msgUrl");
+    const urlRegex = /^(https?:\/\/)[^\s]+\.(jpg|jpeg|png|gif|webp|bmp|svg)(\?.*)?$/i;
+    if (!urlRegex.test(url)) {
+      msgUrl.textContent = "Introduce una URL válida de imagen";
+      msgUrl.style.color = 'red';
+    } else {
+      msgUrl.textContent = "URL válida";
+      msgUrl.style.color = 'green';
+    }
+  });
+</script>

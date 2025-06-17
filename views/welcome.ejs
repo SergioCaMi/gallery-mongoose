@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 3px solid #333;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido, <%= user.displayName %>!</h1>
+    <p>Correo electrónico: <%= user.emails[0].value %></p>
+    <img src="<%= user.photos[0].value %>" alt="Foto de perfil">
+    <br>
+    <a href="/">Volver a la página principal</a>
+</body>
+</html>
+<script>const express = require('express'); </script>
+<script>
+const GoogleStrategy = require('passport-google-oauth20').Strategy; 
+const passport = require('passport'); 
+require('dotenv').config(  
+    {path: process.env.NODE_ENV === 'production' ? '.env' : '.env.development'}
+);
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID, 
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    passReqToCallback: true 
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+app.get("/logout", (req, res) => {
+  req.logout(function(err) {
+    if (err) {
+      console.error("Error al cerrar sesión:", err);
+      // Destruir la sesión manualmente si hay error
+      req.session.destroy(() => {
+        res.redirect("/");
+      });
+    } else {
+      res.redirect("/");
+    }
+  });
+});
+</script>

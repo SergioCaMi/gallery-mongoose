@@ -1,0 +1,95 @@
+[2025-06-17T08:16:25.546Z] TypeError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:42
+    40|                         <div class="color-circles">
+    41|                             <% image.colors.forEach(function(color) { %>
+ >> 42|                                 <div class="color-circle" style="background-color: rgba(<%= color._rgb.join(',') %>);" title="rgba(<%= color._rgb.join(',') %>)"></div>
+    43|                             <% }); %>
+    44|                         </div>
+    45|                     <% } else { %>
+
+Cannot read properties of undefined (reading 'join')
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:69:37)
+    at Proxy.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:66:21)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:19:18)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+[2025-06-17T08:16:51.671Z] TypeError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:42
+    40|                         <div class="color-circles">
+    41|                             <% image.colors.forEach(function(color) { %>
+ >> 42|                                 <div class="color-circle" style="background-color: rgba(<%= color._rgb.join(',') %>);" title="rgba(<%= color._rgb.join(',') %>)"></div>
+    43|                             <% }); %>
+    44|                         </div>
+    45|                     <% } else { %>
+
+Cannot read properties of undefined (reading 'join')
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:69:37)
+    at Proxy.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:66:21)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:19:18)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+[2025-06-17T08:16:54.884Z] TypeError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:42
+    40|                         <div class="color-circles">
+    41|                             <% image.colors.forEach(function(color) { %>
+ >> 42|                                 <div class="color-circle" style="background-color: rgba(<%= color._rgb.join(',') %>);" title="rgba(<%= color._rgb.join(',') %>)"></div>
+    43|                             <% }); %>
+    44|                         </div>
+    45|                     <% } else { %>
+
+Cannot read properties of undefined (reading 'join')
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:69:37)
+    at Proxy.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:66:21)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:19:18)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+[2025-06-17T08:28:21.173Z] TypeError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:42
+    40|                         <div class="color-circles">
+    41|                             <% image.colors.forEach(function(color) { %>
+ >> 42|                                 <div class="color-circle" style="background-color: rgba(<%= color._rgb.join(',') %>);" title="rgba(<%= color._rgb.join(',') %>)"></div>
+    43|                             <% }); %>
+    44|                         </div>
+    45|                     <% } else { %>
+
+Cannot read properties of undefined (reading 'join')
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:69:37)
+    at Proxy.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:66:21)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:19:18)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+[2025-06-17T08:28:55.810Z] TypeError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:42
+    40|                         <div class="color-circles">
+    41|                             <% image.colors.forEach(function(color) { %>
+ >> 42|                                 <!-- <div class="color-circle" style="background-color: rgba(<%= color._rgb.join(',') %>);" title="rgba(<%= color._rgb.join(',') %>)"></div> -->
+    43|                             <% }); %>
+    44|                         </div>
+    45|                     <% } else { %>
+
+Cannot read properties of undefined (reading 'join')
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:69:37)
+    at Proxy.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:66:21)
+    at Array.forEach (<anonymous>)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:19:18)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
