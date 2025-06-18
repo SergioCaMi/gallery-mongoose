@@ -62,7 +62,7 @@ app.get("/logout", (req, res) => {
 
 // ********** Conexión a la base de datos **********
 const mongoose = require("mongoose");
-const Image = require("./models/image");
+const Image = require("./models/image.model");
 main().catch((err) => console.log(err));
 
 async function main() {

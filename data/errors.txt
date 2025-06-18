@@ -258,3 +258,53 @@ index is not defined
     at ServerResponse.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\response.js:909:7)
     at C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\routes\imageRoutes.js:187:9
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[2025-06-17T17:26:58.269Z] ReferenceError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:64
+    62|             <% } %>
+    63| 
+ >> 64|                 <%- include("template/footer", {title: title}) %>
+    65|                     <script>
+    66|                         var dataImage = JSON.parse(`<%- JSON.stringify(dataImage) %>`);
+    67|                     </script>
+
+C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\template\footer.ejs:1
+ >> 1|   <% if (message) { %>
+    2|     <div class="message-box" style="color: <%= colorMessage %>">
+    3|       <%= message %>
+    4|     </div>
+
+message is not defined
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:11:8)
+    at footer (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at include (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:701:39)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:99:17)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+    at Function.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:574:3)
+[2025-06-17T17:27:04.919Z] ReferenceError: C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\home.ejs:64
+    62|             <% } %>
+    63| 
+ >> 64|                 <%- include("template/footer", {title: title}) %>
+    65|                     <script>
+    66|                         var dataImage = JSON.parse(`<%- JSON.stringify(dataImage) %>`);
+    67|                     </script>
+
+C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\views\template\footer.ejs:1
+ >> 1|   <% if (message) { %>
+    2|     <div class="message-box" style="color: <%= colorMessage %>">
+    3|       <%= message %>
+    4|     </div>
+
+message is not defined
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:11:8)
+    at footer (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at include (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:701:39)
+    at eval (eval at compile (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:673:12), <anonymous>:99:17)
+    at home (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:703:17)
+    at tryHandleCache (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:274:36)
+    at exports.renderFile [as engine] (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\ejs\lib\ejs.js:491:10)
+    at View.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\view.js:139:8)
+    at tryRender (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:627:10)
+    at Function.render (C:\Users\sergi\Desktop\IronHack\Modulo 2 MF0492\gallery-mongoose\node_modules\express\lib\application.js:574:3)

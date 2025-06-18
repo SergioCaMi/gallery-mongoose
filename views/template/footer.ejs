@@ -1,6 +1,11 @@
 <footer>
-    <p>&copy; 2025 Sergio Calvo</p>
-    
+  <% if (message) { %>
+    <div class="message-box" style="color: <%= colorMessage %>">
+      <%= message %>
+    </div>
+  <% } %>
+      <p>&copy; 2025 Sergio Calvo</p>
+
 </footer>
 <script>
     /**

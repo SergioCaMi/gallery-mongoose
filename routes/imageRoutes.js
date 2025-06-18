@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Image = require("../models/image");
+const Image = require("../models/image.model");
 const getColors = require("get-image-colors");
 const fetch = require("node-fetch");
 const exifr = require("exifr");
@@ -24,33 +24,45 @@ function isAuthenticated(req, res, next) {
   res.redirect("/");
 }
 
+// Función para renderizar con todos los datos necesarios
+function getRenderObject(title, dataImage, req, message = undefined, colorMessage = "black", user = null) {
+  const userData = user || (
+    req.isAuthenticated?.() && 
+    req.user && 
+    req.user.photos && 
+    req.user.photos.length > 0
+      ? { photo: req.user.photos[0].value }
+      : null
+  );
+
+  return {
+    title,
+    dataImage,
+    message,
+    colorMessage,
+    user: userData
+  };
+}
+
 // **************************************** Home ****************************************
 router.get("/", async (req, res) => {
   try {
     // ******************** Buscamos todas las imagenes ********************
-    const dataImage = await Image.find({}).sort({ date: 1 });
 
-    res.render("home.ejs", {
-      title: "Home",
-      dataImage,
-      user:
-        req.isAuthenticated() &&
-        req.user &&
-        req.user.photos &&
-        req.user.photos.length > 0
-          ? { photo: req.user.photos[0].value }
-          : null,
-    });
+    const dataImage = await Image.find({}).sort({ date: 1 });
+    const renderData = getRenderObject("Home", dataImage, req);
+    res.render("home.ejs", renderData);
   } catch (error) {
     console.error("Error al obtener imágenes:", error);
     res.status(500).send("Error interno del servidor");
   }
 });
 
+
 // **************************************** Add new image ****************************************
 // **************************************** Add new image GET (Mostrar formulario) ****************************************
 
-router.get("/new-image", isAuthenticated, async (req, res) => {    
+router.get("/new-image", isAuthenticated, async (req, res) => {
   res.render("addImage.ejs", {
     title: "New Image",
     message: undefined,
@@ -105,11 +117,13 @@ router.post("/new-image", async (req, res) => {
       exif: exifData,
     });
 
+
     try {
-        await newImage.save();
-    } catch(err){
-        console.log("Error al guardar la imagen en la BBDD. ", err.message);
-        return;
+      await newImage.save();
+      res.status(201).json({ image: newImage });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+      return;
     }
 
     res.render("addImage.ejs", {
@@ -154,7 +168,7 @@ function renderView(res, ejsFile, title, image, user) {
 router.get("/image/:id/view", async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
-    
+
     if (!image) return res.status(404).send("Imagen no encontrada");
     renderView(res, "viewImage.ejs", "View", image, req.user);
   } catch (error) {
@@ -167,7 +181,6 @@ router.get("/image/:id/view", async (req, res) => {
 
 router.get("/image/:id/details", async (req, res) => {
   try {
-    
     const image = await Image.findById(req.params.id);
     if (!image) return res.status(404).send("Imagen no encontrada");
     renderView(res, "detailsImage.ejs", "Details", image, req.user);
