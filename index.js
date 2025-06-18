@@ -53,7 +53,8 @@ app.get(
 // ********** Cerrar sesión **********
 app.get("/logout", (req, res) => {
   req.logout((err) => {
-    if (err) return res.status(500).render("Page404.ejs", { message: "Error al cerrar sesión", status: 500 });
+    if (err) return res.status(500).render("Page404.ejs", { message: "Error al cerrar sesión", status: 500 ,
+    user: req.user});
     res.redirect("/");
   });
 });
@@ -86,7 +87,8 @@ async function main() {
 
   // ******************** URL inválida Error 404 ********************
   app.use((req, res) => {
-    res.status(404).render("Page404.ejs", { message: "Página no encontrada", status: 404 });
+    res.status(404).render("Page404.ejs", { message: "Página no encontrada", status: 404 ,
+    user: req.user});
   });
 
   // ******************** Errores ********************
@@ -108,7 +110,8 @@ async function main() {
         }
       );
     });
-    res.status(500).render("Page404.ejs", { message: "Ups! Ha ocurrido un error. Vuelve a intentarlo más tarde", status: 500 });
+    res.status(500).render("Page404.ejs", { message: "Ups! Ha ocurrido un error. Vuelve a intentarlo más tarde", status: 500 ,
+    user: req.user});
   });
 
   // ****************************** Iniciar servidor ****************************************
@@ -118,4 +121,4 @@ async function main() {
 }
 
 // Mensajes de Error:
-//     res.status(x).render("Page404.ejs", { message: "message", status: x });
+//     res.status(x).render("Page404.ejs", { message: "message", status: x , user: req.user});

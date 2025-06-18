@@ -130,12 +130,14 @@ router.post("/new-image", isAuthenticated, async (req, res) => {
       );
       res.status(201).render("addImage.ejs", renderData);
     } catch (err) {
-    res.status(500).render("Page404.ejs", { message: error.message, status: 500 });
+    res.status(500).render("Page404.ejs", { message: error.message, status: 500,
+    user: req.user });
       return;
     }
   } catch (error) {
     console.error("Error al añadir imagen:", error);
-    res.status(500).render("Page404.ejs", { message: "Error al añadir la imagen", status: 500 });
+    res.status(500).render("Page404.ejs", { message: "Error al añadir la imagen", status: 500,
+    user: req.user });
   }
 });
 
@@ -154,7 +156,8 @@ router.post("/image/:id/delete", isAuthenticated, async (req, res) => {
     return res.status(200).render("addImage.ejs", renderData);
   } catch (error) {
     console.error(`Error al eliminar imagen con id ${req.params.id}:`, error);
-    res.status(500).render("Page404.ejs", { message: "Error al eliminar la imagen", status: 500 });
+    res.status(500).render("Page404.ejs", { message: "Error al eliminar la imagen", status: 500 ,
+    user: req.user});
   }
 });
 
@@ -165,7 +168,8 @@ router.get("/image/:id/view", async (req, res) => {
     const image = await Image.findById(req.params.id);
 
     if (!image) {
-     return res.status(404).render("Page404.ejs", { message: "Imagen no encontrada", status: 404 });
+     return res.status(404).render("Page404.ejs", { message: "Imagen no encontrada", status: 404 ,
+    user: req.user});
     }
 
     const renderData = getRenderObject("View", [image], req);
@@ -173,7 +177,8 @@ router.get("/image/:id/view", async (req, res) => {
     return res.status(200).render("viewImage.ejs", renderData);
   } catch (error) {
     console.error("Error al ver imagen:", error);
-res.status(500).render("Page404.ejs", { message: "Error al cargar imagen", status: 500 });  }
+res.status(500).render("Page404.ejs", { message: "Error al cargar imagen", status: 500 ,
+    user: req.user});  }
 });
 // **************************************** Editar  ****************************************
 // **************************************** Editar  GET (cargar datos antiguos) ****************************************
@@ -189,7 +194,8 @@ router.get("/image/:id/edit", isAuthenticated, async (req, res) => {
     return res.status(200).render("editImage.ejs", renderData);
   } catch (error) {
     console.error("Error al editar imagen:", error);
-    res.status(500).render("Page404.ejs", { message: "Error al editar imagen", status: 500 });
+    res.status(500).render("Page404.ejs", { message: "Error al editar imagen", status: 500,
+    user: req.user });
   }
 });
 
