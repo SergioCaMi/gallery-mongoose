@@ -76,11 +76,6 @@ const exifSchema = new Schema({
 
 // Definición del esquema principal para la imagen
 const imageSchema = new Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true
-  },
   title: {
     type: String,
     required: true

@@ -64,17 +64,28 @@ const exifSchema = new Schema({
   longitude: Number,
 });
 
-// Esquema principal de imagen
 const imageSchema = new Schema({
   title: { type: String, required: true },
-  urlImagen: { type: String, required: true },
+  urlImagen: { type: String, required: true, unique: true },
   date: { type: String, required: true },
   description: String,
   colors: [colorSchema],
   exif: {
     type: exifSchema,
-    default: null, 
+    default: null
   },
+  user: {
+    type: {
+      name: {
+        type: String, 
+      },
+      email: {
+        type: String,
+        required: true,
+        match: [/.+@.+\..+/, "Email inválido"]
+      }
+    },
+  }
 });
 
 const Image = mongoose.model("Image", imageSchema);

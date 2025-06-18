@@ -24,78 +24,77 @@ function isAuthenticated(req, res, next) {
   res.redirect("/");
 }
 
-// Función para renderizar con todos los datos necesarios
-function getRenderObject(title, dataImage, req, message = undefined, colorMessage = "black", user = null) {
-  const userData = user || (
-    req.isAuthenticated?.() && 
-    req.user && 
-    req.user.photos && 
+// ********** Función para renderizar con todos los datos necesarios **********
+function getRenderObject(
+  title,
+  dataImage = null,
+  req = null,
+  message = undefined,
+  colorMessage = "black",
+  user = null
+) {
+  const userData =
+    user ||
+    (req.isAuthenticated?.() &&
+    req.user &&
+    req.user.photos &&
     req.user.photos.length > 0
       ? { photo: req.user.photos[0].value }
-      : null
-  );
+      : null);
 
   return {
     title,
     dataImage,
     message,
     colorMessage,
-    user: userData
+    user: userData,
   };
 }
-
 // **************************************** Home ****************************************
 router.get("/", async (req, res) => {
   try {
     // ******************** Buscamos todas las imagenes ********************
 
     const dataImage = await Image.find({}).sort({ date: 1 });
-    const renderData = getRenderObject("Home", dataImage, req);
-    res.render("home.ejs", renderData);
+    const renderData = getRenderObject(
+      "Home",
+      dataImage,
+      req,
+      undefined,
+      "black"
+    );
+    res.status(200).render("home.ejs", renderData);
   } catch (error) {
     console.error("Error al obtener imágenes:", error);
     res.status(500).send("Error interno del servidor");
   }
 });
 
-
 // **************************************** Add new image ****************************************
 // **************************************** Add new image GET (Mostrar formulario) ****************************************
 
 router.get("/new-image", isAuthenticated, async (req, res) => {
-  res.render("addImage.ejs", {
-    title: "New Image",
-    message: undefined,
-    colorMessage: "black",
-    user:
-      req.isAuthenticated() &&
-      req.user &&
-      req.user.photos &&
-      req.user.photos.length > 0
-        ? { photo: req.user.photos[0].value }
-        : null,
-  });
+  const dataImage = await Image.find({}).sort({ date: 1 });
+  const renderData = getRenderObject("New Image", dataImage, req);
+  res.status(200).render("addImage.ejs", renderData);
 });
 
 // **************************************** Add new image POST (guardar imagen) ****************************************
-router.post("/new-image", async (req, res) => {
+router.post("/new-image", isAuthenticated, async (req, res) => {
+  const dataImage = [];
   try {
     const existingImage = await Image.findOne({
       urlImagen: req.body.urlImagen,
     });
     if (existingImage) {
-      return res.render("addImage.ejs", {
-        title: "New Image",
-        message: `La imagen "${req.body.title}" ya se encontraba en el archivo.`,
-        colorMessage: "red",
-        user:
-          req.isAuthenticated() &&
-          req.user &&
-          req.user.photos &&
-          req.user.photos.length > 0
-            ? { photo: req.user.photos[0].value }
-            : null,
-      });
+      const renderData = getRenderObject(
+        "New Image",
+        dataImage,
+        req,
+        `La imagen "${req.body.title}" ya se encontraba en el archivo.`,
+        "red"
+      );
+      res.status(500).render("addImage.ejs", renderData);
     }
 
     let colors;
@@ -115,108 +114,88 @@ router.post("/new-image", async (req, res) => {
       description: req.body.description,
       colors,
       exif: exifData,
+      user: {
+        name: `${req.user.name.givenName} ${req.user.name.familyName}`,
+        email: req.user.emails?.[0]?.value || req.user.email || "No email",
+      },
     });
-
-
     try {
       await newImage.save();
-      res.status(201).json({ image: newImage });
+      const renderData = getRenderObject(
+        "New Image",
+        dataImage,
+        req,
+        `La imagen "${req.body.title}" se ha añadido satisfactoriamente.`,
+        "green"
+      );
+      res.status(201).render("addImage.ejs", renderData);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+    res.status(500).render("Page404.ejs", { message: error.message, status: 500 });
       return;
     }
-
-    res.render("addImage.ejs", {
-      title: "New Image",
-      message: `La imagen "${req.body.title}" se ha añadido satisfactoriamente.`,
-      colorMessage: "green",
-      user:
-        req.isAuthenticated() &&
-        req.user &&
-        req.user.photos &&
-        req.user.photos.length > 0
-          ? { photo: req.user.photos[0].value }
-          : null,
-    });
   } catch (error) {
     console.error("Error al añadir imagen:", error);
-    res.status(500).send("Error al añadir la imagen");
+    res.status(500).render("Page404.ejs", { message: "Error al añadir la imagen", status: 500 });
   }
 });
 
 // **************************************** Eliminar imagen ****************************************
-router.post("/image/:id/delete", async (req, res) => {
+router.post("/image/:id/delete", isAuthenticated, async (req, res) => {
+  dataImage = [];
   try {
     await Image.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Imagen eliminada" });
+    const renderData = getRenderObject(
+      "Home",
+      dataImage,
+      req,
+      `La imagen "${req.body.title}" se ha eliminado satisfactoriamente.`,
+      "green"
+    );
+    return res.status(200).render("addImage.ejs", renderData);
   } catch (error) {
     console.error(`Error al eliminar imagen con id ${req.params.id}:`, error);
-    res.status(500).json({ message: "Error al eliminar la imagen" });
+    res.status(500).render("Page404.ejs", { message: "Error al eliminar la imagen", status: 500 });
   }
 });
 
 // **************************************** Visualizar  ****************************************
-function renderView(res, ejsFile, title, image, user) {
-  res.render(ejsFile, {
-    title,
-    dataImage: [image],
-    index: 0,
-    user,
-  });
-}
 
 router.get("/image/:id/view", async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
 
-    if (!image) return res.status(404).send("Imagen no encontrada");
-    renderView(res, "viewImage.ejs", "View", image, req.user);
+    if (!image) {
+     return res.status(404).render("Page404.ejs", { message: "Imagen no encontrada", status: 404 });
+    }
+
+    const renderData = getRenderObject("View", [image], req);
+
+    return res.status(200).render("viewImage.ejs", renderData);
   } catch (error) {
     console.error("Error al ver imagen:", error);
-    res.status(500).send("Error al cargar imagen");
-  }
+res.status(500).render("Page404.ejs", { message: "Error al cargar imagen", status: 500 });  }
 });
-
-// **************************************** Detalles  ****************************************
-
-router.get("/image/:id/details", async (req, res) => {
-  try {
-    const image = await Image.findById(req.params.id);
-    if (!image) return res.status(404).send("Imagen no encontrada");
-    renderView(res, "detailsImage.ejs", "Details", image, req.user);
-  } catch (error) {
-    console.error("Error al mostrar detalles:", error);
-    res.status(500).send("Error al mostrar detalles");
-  }
-});
-
 // **************************************** Editar  ****************************************
 // **************************************** Editar  GET (cargar datos antiguos) ****************************************
 
-router.get("/image/:id/edit", async (req, res) => {
+router.get("/image/:id/edit", isAuthenticated, async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
-    if (!image) return res.status(404).send("Imagen no encontrada");
-    res.render("editImage.ejs", {
-      title: "Edit Image",
-      image,
-      user:
-        req.isAuthenticated() &&
-        req.user &&
-        req.user.photos &&
-        req.user.photos.length > 0
-          ? { photo: req.user.photos[0].value }
-          : null,
-    });
+    if (!image) {
+     return res.status(404).render("Page404.ejs", { message: "Imagen no encontrada", status: 404 });
+    }
+        const renderData = getRenderObject("Edit", [image], req);
+        console.log("Datos de la imagen a editar:", renderData);
+    return res.status(200).render("editImage.ejs", renderData);
   } catch (error) {
     console.error("Error al editar imagen:", error);
-    res.status(500).send("Error al editar imagen");
+    res.status(500).render("Page404.ejs", { message: "Error al editar imagen", status: 500 });
   }
 });
 
 // **************************************** Editar POST (guardar nuevos datos) ****************************************
 
-router.post("/edit-image", async (req, res) => {
+router.post("/edit-image", isAuthenticated, async (req, res) => {
   try {
     const updatedImage = await Image.findByIdAndUpdate(
       req.body.id,

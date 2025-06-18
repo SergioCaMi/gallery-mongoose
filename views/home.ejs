@@ -8,6 +8,10 @@
             </h2>
         </div>
         <% } else { %>
+            <h3 style="margin-left: 100px;">
+                (<%= dataImage.length %> imágenes)
+            </h3>
+
             <div class="gallery container">
                 <% dataImage.forEach(image=> { %>
                     <div class="card" id="<%= image.id %>">
