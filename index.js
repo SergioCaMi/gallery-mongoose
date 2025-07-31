@@ -9,11 +9,8 @@ const fs = require("fs");
 // ****************************** Sesión Google + Autenticación ******************************
 
 // ********** Cargar las variables de entorno **********
-if (process.env.NODE_ENV === "production") {
-  require("dotenv").config(); // Usa .env por defecto en producción
-} else {
-  require("dotenv").config({ path: ".env.development" }); // Usa .env.development en desarrollo
-}
+
+require("dotenv").config();
 
 // ********** Configura la sesión del usuario **********
 const session = require("express-session");
@@ -33,28 +30,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // ********** Ruta que manda al usuario a iniciar sesión con Google **********
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+app.get("/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }));
 
 // ********** Ruta a la que vuelve Google después del login **********
-app.get(
-  "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    res.render("welcome", { user: req.user });
-  }
-);
+app.get("/google/callback", passport.authenticate("google", { failureRedirect: "/login" }), function (req, res) {
+  res.render("welcome", { user: req.user });
+});
 
 // ********** Cerrar sesión **********
 app.get("/logout", (req, res) => {
   req.logout((err) => {
-    if (err) return res.status(500).render("Page404.ejs", { message: "Error al cerrar sesión", status: 500 ,
-    user: req.user});
+    if (err) return res.status(500).render("Page404.ejs", { message: "Error al cerrar sesión", status: 500, user: req.user });
     res.redirect("/");
   });
 });
@@ -87,8 +74,7 @@ async function main() {
 
   // ******************** URL inválida Error 404 ********************
   app.use((req, res) => {
-    res.status(404).render("Page404.ejs", { message: "Página no encontrada", status: 404 ,
-    user: req.user});
+    res.status(404).render("Page404.ejs", { message: "Página no encontrada", status: 404, user: req.user });
   });
 
   // ******************** Errores ********************
@@ -102,16 +88,11 @@ async function main() {
     fs.mkdir(dirPath, { recursive: true }, (dirErr) => {
       if (dirErr) console.error("Error al crear el directorio data:", dirErr);
 
-      fs.appendFile(
-        errorLogPath,
-        `[${new Date().toISOString()}] ${err.stack}\n`,
-        (fileErr) => {
-          if (fileErr) console.error("Error al escribir en errores:", fileErr);
-        }
-      );
+      fs.appendFile(errorLogPath, `[${new Date().toISOString()}] ${err.stack}\n`, (fileErr) => {
+        if (fileErr) console.error("Error al escribir en errores:", fileErr);
+      });
     });
-    res.status(500).render("Page404.ejs", { message: "Ups! Ha ocurrido un error. Vuelve a intentarlo más tarde", status: 500 ,
-    user: req.user});
+    res.status(500).render("Page404.ejs", { message: "Ups! Ha ocurrido un error. Vuelve a intentarlo más tarde", status: 500, user: req.user });
   });
 
   // ****************************** Iniciar servidor ****************************************

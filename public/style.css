@@ -7,8 +7,8 @@
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f4f4;
-      padding-top: 80px; /* Altura del header */
-      padding-bottom: 60px; /* Altura del footer */
+      padding-top: 80px; 
+      padding-bottom: 60px; 
       overflow-x: hidden;
     }
 
